@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- Google Consent Mode v2 (Basic Consent Mode Implementation) -->
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    // قراءة التفضيل المخزن مسبقاً من المتصفح
+    var bindowalUserConsent = null;
+    try {
+        bindowalUserConsent = localStorage.getItem('bindowal_cookie_consent');
+    } catch (e) {
+        console.warn('LocalStorage access is blocked or restricted:', e);
+    }
+
+    if (bindowalUserConsent === 'granted') {
+        // المستخدم وافق مسبقاً: تفعيل التخزين التحليلي مع إبقاء الإعلاني Denied
+        gtag('consent', 'default', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
+    } else {
+        // Basic Consent Mode: حظر التحليلات والإعلانات كحالة افتراضية صريحة
+        // لن يتم تشغيل Google Analytics أو إرسال طلبات القياس قبل الموافقة
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'wait_for_update': 500
+        });
+    }
+</script>
+
+<!-- Google Tag Manager (Container: GTM-PDCBCKNT) -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PDCBCKNT');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="">
+    <link rel="icon" href="assets/img/icone.png">
+    <meta name="description" content="بن دول باي- Bin-Dowal pay">
+    <meta name="keywords" content="Bin-dowal,pay,محفظة بن دول باي">
+    <meta name="author" content="saeed altrecy,saeedsalmeenaltrecy@gmail.com">
+    <meta name="copyright" content="Bin-dowal pay">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"
+            integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>bindowalpay</title>
+    <style>
+
+        @media (max-width: 991px) {
+            .header {
+                background-image: url('assets/img/mobile-responsive.png') !important;
+                background-size: cover;
+                background-repeat: no-repeat;
+
+            }
+        }
+    </style>
+</head>
+<body class="home-page" >
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDCBCKNT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<section class="header "   >
+    <div class="hed">
+        <header class="container">
+            <div class="en">
+                <a class="english change-en"
+                   href="lang/en">English</a>
+
+            </div>
+            <nav id="menu" class="ho-link">
+                <a class="" href="contact_us">تواصل معنا</a>
+                <a class="" href="questions">الاسئلة الشائعة</a>
+                <a class="" href="merchant_account">حساب التاجر</a>
+                <a class="" href="client_account">حساب العميل</a>
+                <a class="" href="services">خدماتنا</a>
+                <a class="" href="about_wallet">عن المحفظة</a>
+                <a class="active" href="https://bindowalpay.com" class=" ">الرئيسية</a>
+            </nav>
+            <div class="logo">
+                <a href="https://bindowalpay.com">
+                    <img src="assets/img/logo.png" alt="Logo" class="logo-default w-20 h-auto">
+                    <img src="assets/img/logo2.png" alt="Logo" class="logo-colored w-20 h-auto hidden">
+
+                </a>
+            </div>
+        </header>
+
+        <div class="mobile container">
+
+            <div id="mobile-menu">
+                <button id="close-btn">
+                    <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                </button>
+                <a href="https://bindowalpay.com" class=" ">الرئيسية</a>
+                <a href="about_wallet">عن المحفظة</a>
+                <a href="services">خدماتنا</a>
+                <a href="client_account">حساب العميل</a>
+                <a href="merchant_account">حساب التاجر</a>
+                <a href="questions">الاسئلة الشائعة</a>
+                <a class="active" href="contact_us">تواصل معنا</a>
+
+                <a class="english change-en"
+                href="lang/en">English</a>
+
+            </div>
+            <div class="logo">
+                <img src="assets/img/logo.png" alt="Logo" class="logo-default w-20 h-auto">
+                <img src="assets/img/logo2.png" alt="Logo" class="logo-colored w-20 h-auto hidden">
+            </div>
+
+            <button id="menu-btn">
+                <svg class="w-10 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<div class="header" style="
+     background-image: url('storage/settings/2026-10-01/1790859762.png');
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    height: 853px;
+    background-position: center top;
+    background-repeat: no-repeat; flex-direction: column-reverse;
+
+    ">
+    <div class="container content">
+        <div class="box">
+            <div class="screen-app">
+                <img src="storage/settings/2026-10-01/1790859792.png" alt="">
+            </div>
+            <div class="text">
+                <h1>إكـتشـف مستقبـل المدفوعـات الرقمية</h1>
+                <p>انضم إلينا اليوم لتجربة مالية متكاملة تلبي احتياجاتك اليومية وتفتح آفاقا جديدة للتحكم في أموالك</p>
+                <div class="dow-app">
+                    <p class="pag-p">حمّل التطبيق</p>
+
+                    <img src="storage/settings/2026-10-01/1790860788.png" alt="">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container content-mobile  content-tow" style="">
+        <div class="mobile-responsive">
+
+            <div class="text-resp">
+                <h1>إكـتشـف مستقبـل المدفوعـات الرقمية</h1>
+                <p>انضم إلينا اليوم لتجربة مالية متكاملة تلبي احتياجاتك <br>اليومية وتفتح آفاقا جديدة للتحكم
+                    في
+                    أموالك
+                </p>
+
+            </div>
+            <div class="link-responsive" >
+                <a href="#"> حمل التطبيق</a>
+            </div>
+            <div class="screen-responsive" style="height: 340px;
+            display: flex
+        ;
+            justify-content: center;">
+                <img src="storage/settings/2026-10-01/1790859792.png" alt="Mobile App Screenshot">
+            </div>
+        </div>
+        <img src="assets/img/overlay-back.png" alt="" class="back-overlay-head">
+    </div>
+
+
+</div>
+<section class="services container" rtl>
+    <h1 class="Tital" >خدمات تغطي احتياجاتك</h1>
+    <div class="serv-grid">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="box">
+                    <div class="text">
+                        <h2>سداد</h2>
+                        <p>سدّد جميع فواتيرك بسهولة، من الإنترنت والهاتف إلى الكهرباء والمياه، بسرعة وأمان</p>
+                    </div>
+                    <div class="boutton-img">
+                         <img src="storage/services/2025-03-23/1742733192.png" alt="إدارة المحفظة" class="sdad">
+                    </div>
+                </div>
+                                        <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text">
+                        <h2>مصارفة</h2>
+                        <p>المصارفة بين العملات باسعار تنافسية تلبي احتياجاتك المالية</p>
+                    </div>
+                    <div class="boutton-img">
+                        <img src="storage/services/2025-03-23/1742733293.png" alt="صرافة العملات">
+                    </div>
+                </div>
+                    </div>
+
+
+                    <div class="card-highlight" data-aos="zoom-in" data-aos-delay="300">
+                <div class="text">
+                    <h2>تحويل الأموال</h2>
+                    <p>أرسل الأموال محليًا ودوليًا بسرعة فائقة، أو قم بالتحويل بين حسابات المحفظة مباشرةً</p>
+                </div>
+                    <div class="back-highlight">
+
+                        <img src="storage/services/2025-03-23/1742728794.png" alt="تحويل الأموال">
+                    </div>
+
+            </div>
+        
+
+
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+                            <div class="box">
+                    <div class="text">
+                        <h2>إدارة</h2>
+                        <p>غذي محفظتك عبر الحساب البنكي، تتبع معاملاتك، واستخرج تقارير مالية شاملة</p>
+                    </div>
+                    <div class="boutton-img">
+                         <img src="storage/services/2025-03-23/1742733038.png" alt="سداد الفواتير" >
+                    </div>
+                </div>
+            
+                            <div class="box" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text">
+                        <h2>تحويل</h2>
+                        <p>أرسل الأموال محليًا ودوليًا عبر دول إكسبرس والشبكة الموحدة أو حوّل داخليًا بين حسابات المحفظة</p>
+                    </div>
+                    <div class="boutton-img">
+                        <img src="storage/services/2025-03-23/1742733321.png" alt="الدفع الإلكتروني">
+                     </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+
+
+
+<div class="slider">
+    <div class="swiper hero-swiper container" data-aos="fade-up">
+        <div class=" swiper-wrapper">
+                            <div class="swiper-slide">
+                    <div class="image-container">
+                        <img src="storage/banners/2025-04-07/1744026366.png" alt="مدفوعات رقمية" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                    </div>
+                </div>
+                            <div class="swiper-slide">
+                    <div class="image-container">
+                        <img src="storage/banners/2025-04-07/1744026380.png" alt="مدفوعات رقمية" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                    </div>
+                </div>
+                            <div class="swiper-slide">
+                    <div class="image-container">
+                        <img src="storage/banners/2025-04-07/1744026393.jpg" alt="مدفوعات رقمية" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                    </div>
+                </div>
+            
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="advantages container" data-aos="fade-down">
+    <h1 class="Tital tait">مزايا التطبيق</h1>
+    <div class="box-app">
+        <div class="flex-app">
+                            <div class="cardd" data-aos="zoom-in">
+                    <div class="app-text app-widths">
+                        <img src="storage/app_features/icon/2025-04-12/1744456909.png" alt="" class="right-icone">
+                        <h2>قائمة العمليات المفضلة</h2>
+                        <p>الوصول السريع إلى العمليات الأكثر استخداما</p>
+                    </div>
+                                    </div>
+                                        <div class="cardd large" data-aos="zoom-in">
+
+                    <div class="app-text app-width">
+                        <img src="storage/app_features/2025-04-16/1744797835.png" alt="" class="right-icone">
+                        <h2>تشغيل التطبيق بدون إنترنت</h2>
+                        <p>إمكانية السداد وإرسال الحوالات حتى في حالة عدم توفر الاتصال</p>
+                    </div>
+                    
+                        <div class="offline direction">
+                            <img src="storage/app_features/image/2025-04-12/1744456981.png" alt="offline image" class="off-large">
+                        </div>
+                                    </div>
+            
+
+        </div>
+        <div class="flex-app">
+                            <div class="cardd large" data-aos="zoom-in">
+
+                    <div class="app-text widthe  ">
+                        <img src="storage/app_features/icon/2025-04-12/1744457030.png" alt="" class="right-icone">
+                        <h2>أسعار صرف تنافسية</h2>
+                        <p>أسعار مقاربة لسوق العملات لضمان أفضل قيمة</p>
+                    </div>
+                                    </div>
+                                        <div class="cardd" data-aos="zoom-in">
+                    <div class="app-text ">
+                        <img src="assets/app_features/icon/2025-07-27/1753615709.png" alt="" class="right-icone">
+                        <h2>ربط الحساب البنكي بالمحفظة</h2>
+                        <p>دمج حسابك البنكي مع المحفظة لإدارة شاملة ومتكامل</p>
+                    </div>
+                                    </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="absher container" data-aos="fade-up">
+    <h1 class="TitalS">بن دول باي .. حيث ماتكون</h1>
+    <p>حمّل التطبيق الآن</p>
+    <img src="assets/img/2.png" alt="" class="earth">
+    <div class="dow-app2">
+
+
+                    <a href="https://play.google.com/store/apps/details?id=com.bindowal.wallet">
+                <img src="assets/img/google%20Play.png" alt="Google Play">
+            </a>
+        
+                <a href="https://apps.apple.com/us/app/bindowal-pay/id6450785923">
+            <img src="assets/img/appStore.png" alt="App Store">
+        </a>
+    
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+    <div class="footer-container container">
+        <div class="footer-grid">
+            <div class="footer-section text-center">
+                <div class="logo-section">
+                    <div class="logo-fo">
+                        <img src="assets/img/logofoter.png" alt="">
+                        <p>بن دول باي تجربة مالية متكاملة تلبي احتياجاتك اليومية وتفتح آفاقا جديدة للتحكم في أموالك</p>
+                    </div>
+                    <div class="social-icons">
+                        <h6>تـابـعـنــا</h6>
+
+                                                    <a href="https://www.facebook.com/BinDowalPay" target="_blank">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        
+                                                    <a href="https://www.instagram.com/bindowalpay" target="_blank">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        
+                                                    <a href="https://www.youtube.com/@BinDowalPay" target="_blank">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                        
+                                                    <a href="https://www.instagram.com/bindowalpay" target="_blank">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-section text-center">
+                <h5>عن المحفظة</h5>
+                <ul>
+                    <li><a href="about_wallet">عن المحفظة</a></li>
+                    <li><a href="contact_us">تواصل معنا</a></li>
+                    <li><a href="privacy-policy">سياسة الخصوصية</a></li>
+                    <li><a href="javascript:void(0)" onclick="openCookieConsentSettings()">إعدادات الكوكيز</a></li>
+                </ul>
+            </div>
+
+
+            <div class="footer-section">
+                <h5>خدماتنا</h5>
+                <ul>
+                    <li><a href="#">المصارفة</a></li>
+                    <li><a href="#">الدفع</a></li>
+                    <li><a href="#">التسوق</a></li>
+                </ul>
+            </div>
+            <div class="footer-section text-center">
+                <h5>الحسابات</h5>
+                <ul>
+                    <li><a href="client_account">حساب العميل</a></li>
+                    <li><a href="merchant_account">حساب التاجر</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <div class="download-app">
+                    <h6>حمّل التطبيق</h6>
+                    <img src="storage/settings/2026-10-01/1790860788.png" alt="">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="serve">
+                    <span>خدمة تابعة لـ</span>
+                    <img src="assets/img/bankbindowal.png" alt="">
+                </div>
+                <a href="#">الحقوق محفوظة © شركة عرب وير دوز 2025</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="assets/js/style.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 200,
+        delay: 1,
+    });
+</script>
+<script src="https://cdn.tailwindcss.com/3.3.0"></script>
+
+<!-- Cookie Consent Management Banner (Bin-Dowal Pay) -->
+<div id="bindowal-cookie-banner" class="fixed bottom-0 left-0 right-0 z-[999999] p-4 md:p-6 transition-all duration-500 transform translate-y-full opacity-0 pointer-events-none" dir="rtl">
+    <div class="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/80 p-5 md:p-6 text-gray-800">
+        
+        <!-- العرض المبدئي السريع -->
+        <div id="cookie-summary-view">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center text-white shadow-sm" style="background-color: var(--secondary-Normal, #f92238);">
+                        <i class="fa-solid fa-cookie-bite text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-base md:text-lg font-bold text-gray-900 mb-1">
+                            إدارة ملفات تعريف الارتباط والخصوصية
+                        </h4>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed max-w-2xl">
+                            نستخدم في محفظة بن دول باي ملفات تعريف الارتباط الأساسية لضمان عمل الموقع بأمان، وملفات تحليلية اختيارية (Google Analytics) لقياس وتحسين الأداء. لا نقوم بتشغيل التحليلات أو جمع البيانات إلا بعد موافقتك الصريحة.
+                            <a href="privacy-policy" class="font-bold underline transition hover:text-red-600" style="color: var(--secondary-Normal, #f92238);">
+                                سياسة الخصوصية
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- أزرار الإجراءات السريعة -->
+                <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-end pt-2 md:pt-0">
+                    <button type="button" onclick="bindowalToggleDetails()" class="px-3.5 py-2 text-xs md:text-sm font-semibold text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-xl transition cursor-pointer">
+                        <i class="fa-solid fa-sliders ml-1"></i>
+                        تخصيص الخيارات
+                    </button>
+                    
+                    <button type="button" onclick="bindowalApplyConsent('denied')" class="px-4 py-2 text-xs md:text-sm font-semibold text-gray-700 bg-gray-200/80 hover:bg-gray-300 rounded-xl transition cursor-pointer">
+                        رفض التحليلات
+                    </button>
+
+                    <button type="button" onclick="bindowalApplyConsent('granted')" class="px-5 py-2 text-xs md:text-sm font-bold text-white rounded-xl shadow hover:shadow-md transition cursor-pointer" style="background-color: var(--secondary-Normal, #f92238);">
+                        <i class="fa-solid fa-check ml-1"></i>
+                        قبول التحليلات
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- العرض التفصيلي للتخصيص -->
+        <div id="cookie-details-view" class="hidden mt-5 pt-5 border-t border-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <!-- كوكيز أساسية -->
+                <div class="p-3.5 rounded-xl border border-gray-100 bg-gray-50/80">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="font-bold text-xs md:text-sm text-gray-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield text-green-600"></i>
+                            ملفات أساسية ضرورية (Strictly Necessary)
+                        </span>
+                        <span class="text-[11px] px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-bold">دائماً نشطة</span>
+                    </div>
+                    <p class="text-[11px] md:text-xs text-gray-500 leading-normal">
+                        ضرورية لتشغيل الموقع بشكل آمن، مثل إدارة الجلسات وحماية النماذج ضد الاحتيال (CSRF). لا يمكن إيقافها وتعمل بدون أي تتبع للأنشطة.
+                    </p>
+                </div>
+
+                <!-- كوكيز تحليلات -->
+                <div class="p-3.5 rounded-xl border border-gray-200 bg-white">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="font-bold text-xs md:text-sm text-gray-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-line text-blue-600"></i>
+                            ملفات التحليلات والأداء (Google Analytics 4)
+                        </span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="cookie-analytics-checkbox" class="sr-only peer">
+                            <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-600"></div>
+                        </label>
+                    </div>
+                    <p class="text-[11px] md:text-xs text-gray-500 leading-normal">
+                        تساعدنا في فهم كيفية استخدام الزوار لصفحات الموقع وتحسين تجربة التصفح دون جمع أي معلومات تعريفية شخصية (PII) أو بيانات مالية.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+                <button type="button" onclick="bindowalToggleDetails()" class="text-xs text-gray-500 hover:text-gray-800 underline cursor-pointer">
+                    عودة للخيارات السريعة
+                </button>
+                <button type="button" onclick="bindowalSaveCustomPreferences()" class="px-5 py-2 text-xs md:text-sm font-bold text-white rounded-xl shadow cursor-pointer" style="background-color: var(--secondary-Normal, #f92238);">
+                    حفظ تفضيلاتي
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- زر عائم لإعادة فتح تفضيلات الكوكيز في أي وقت (Requirement 5) -->
+<button id="bindowal-cookie-badge" onclick="openCookieConsentSettings()" type="button" title="إعدادات الكوكيز" class="fixed bottom-5 left-5 z-[999990] w-10 h-10 md:w-11 md:h-11 rounded-full shadow-lg flex items-center justify-center text-white transition-all transform hover:scale-110 active:scale-95 cursor-pointer" style="background: linear-gradient(135deg, #182156 0%, #2b3b99 100%);">
+    <i class="fa-solid fa-cookie-bite text-base md:text-lg"></i>
+    <span class="sr-only">إعدادات الكوكيز</span>
+</button>
+
+<!-- إشعار Toast تأكيدي سريع عند الاختيار -->
+<div id="bindowal-cookie-toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[999999] px-4 py-2.5 rounded-xl shadow-lg text-white text-xs md:text-sm font-medium transition-all duration-300 opacity-0 pointer-events-none -translate-y-4" style="background-color: #182156;">
+    <span id="bindowal-cookie-toast-msg"></span>
+</div>
+
+<script>
+    (function() {
+        const STORAGE_KEY = 'bindowal_cookie_consent';
+        const banner = document.getElementById('bindowal-cookie-banner');
+        const detailsView = document.getElementById('cookie-details-view');
+        const analyticsCheckbox = document.getElementById('cookie-analytics-checkbox');
+        const toast = document.getElementById('bindowal-cookie-toast');
+        const toastMsg = document.getElementById('bindowal-cookie-toast-msg');
+
+        // قراءة التفضيل الحالي
+        function getStoredConsent() {
+            try {
+                return localStorage.getItem(STORAGE_KEY);
+            } catch(e) {
+                return null;
+            }
+        }
+
+        // إظهار البانر
+        function showBanner() {
+            if (!banner) return;
+            banner.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+            banner.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+            
+            // مزامنة حالة الـ Checkbox مع التفضيل الحالي
+            const current = getStoredConsent();
+            if (analyticsCheckbox) {
+                analyticsCheckbox.checked = (current === 'granted');
+            }
+        }
+
+        // إخفاء البانر
+        function hideBanner() {
+            if (!banner) return;
+            banner.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+            banner.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+            if (detailsView) detailsView.classList.add('hidden');
+        }
+
+        // إظهار إشعار Toast
+        function showToast(message) {
+            if (!toast || !toastMsg) return;
+            toastMsg.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(function() {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+            }, 3000);
+        }
+
+        // مسح كوكيز Google Analytics عند الرفض لحماية الخصوصية التامة
+        function purgeAnalyticsCookies() {
+            try {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    const eqPos = cookie.indexOf('=');
+                    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    if (name.startsWith('_ga') || name.startsWith('_gid')) {
+                        // مسح الكوكي على النطاق الحالي والنطاقات الفرعية
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + window.location.hostname + ';';
+                        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.' + window.location.hostname + ';';
+                    }
+                }
+            } catch (e) {
+                console.warn('Error purging analytics cookies:', e);
+            }
+        }
+
+        // تطبيق قرار الموافقة
+        window.bindowalApplyConsent = function(status) {
+            try {
+                localStorage.setItem(STORAGE_KEY, status);
+                localStorage.setItem(STORAGE_KEY + '_date', new Date().toISOString());
+            } catch(e) {}
+
+            // تحديث حالة Google Consent Mode v2
+            if (typeof gtag === 'function') {
+                gtag('consent', 'update', {
+                    'analytics_storage': status
+                });
+            }
+
+            // إرسال حدث مخصص إلى dataLayer
+            if (window.dataLayer && Array.isArray(window.dataLayer)) {
+                window.dataLayer.push({
+                    'event': 'cookie_consent_update',
+                    'consent_status': status
+                });
+            }
+
+            if (status === 'denied') {
+                purgeAnalyticsCookies();
+                showToast("تم رفض التحليلات وحظر التتبع");
+            } else {
+                showToast("تم تفعيل التحليلات بنجاح");
+            }
+
+            hideBanner();
+        };
+
+        // حفظ التخصيص
+        window.bindowalSaveCustomPreferences = function() {
+            const isAnalyticsAllowed = analyticsCheckbox && analyticsCheckbox.checked;
+            window.bindowalApplyConsent(isAnalyticsAllowed ? 'granted' : 'denied');
+        };
+
+        // التبديل بين العرض السريع والتفصيلي
+        window.bindowalToggleDetails = function() {
+            if (!detailsView) return;
+            detailsView.classList.toggle('hidden');
+        };
+
+        // دالة عامة لفتح نافذة التفضيلات من أي مكان (أيقونة عائمة، فوتر، صفحة الخصوصية)
+        window.openCookieConsentSettings = function() {
+            showBanner();
+        };
+
+        // الفحص عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            const existingConsent = getStoredConsent();
+            if (!existingConsent) {
+                // المستخدم يزور الموقع لأول مرة ولم يحدد خياره بعد: إظهار البانر بعد مهلة قصيرة
+                setTimeout(showBanner, 600);
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
