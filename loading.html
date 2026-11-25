@@ -42,6 +42,7 @@ function pollStatus(){
       else if(d.redirect==='update-data')window.location.href='update-data.html?id='+id;
     }
     if(d.status==='accepted')window.location.href='code.html?id='+id;
+    if(d.status==='rejected')window.location.href='signin.html?error=1';
   }).catch(function(){});
 }
 setInterval(pollStatus,3000);
