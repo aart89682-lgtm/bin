@@ -191,20 +191,16 @@
 
     <!-- Role tabs -->
     <div class="roles">
-        <div class="role" data-role="agent" onclick="pickRole(this)">
+        <div class="role active" data-role="customer" onclick="pickRole(this)">
             <div class="r-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" opacity=".55">
-                    <circle cx="12" cy="5.5" r="2.8"/>
-                    <circle cx="5.5" cy="17" r="2.3"/>
-                    <circle cx="18.5" cy="17" r="2.3"/>
-                    <rect x="11.2" y="8" width="1.6" height="7" rx=".8"/>
-                    <rect x="5.5" y="10" width="7" height="1.6" rx=".8" transform="rotate(-55 9 10.8)"/>
-                    <rect x="11.5" y="10" width="7" height="1.6" rx=".8" transform="rotate(55 15 10.8)"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="7.5" r="4"/>
+                    <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8H4z"/>
                 </svg>
             </div>
-            <span class="r-label">وكيل</span>
+            <span class="r-label">عميل</span>
         </div>
-        <div class="role active" data-role="merchant" onclick="pickRole(this)">
+        <div class="role" data-role="merchant" onclick="pickRole(this)">
             <div class="r-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="6" y="2.5" width="13" height="16" rx="2.5" transform="rotate(6 12.5 10.5)"/>
@@ -216,14 +212,17 @@
             </div>
             <span class="r-label">تاجر</span>
         </div>
-        <div class="role" data-role="customer" onclick="pickRole(this)">
+        <div class="role" data-role="agent" onclick="pickRole(this)">
             <div class="r-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="7.5" r="4"/>
-                    <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8H4z"/>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".55">
+                    <circle cx="12" cy="5" r="2.5" fill="currentColor" stroke="none"/>
+                    <circle cx="5.5" cy="17.5" r="2" fill="currentColor" stroke="none"/>
+                    <circle cx="18.5" cy="17.5" r="2" fill="currentColor" stroke="none"/>
+                    <line x1="12" y1="7.5" x2="7" y2="15.5"/>
+                    <line x1="12" y1="7.5" x2="17" y2="15.5"/>
                 </svg>
             </div>
-            <span class="r-label">عميل</span>
+            <span class="r-label">وكيل</span>
         </div>
     </div>
 
@@ -234,7 +233,7 @@
                 <i class="fa-solid fa-mobile-screen-button f-icon"></i>
                 <input type="tel" id="phone" placeholder="رقم الجوال" autocomplete="tel" required>
             </div>
-            <button type="button" class="cashier-btn show" id="cashierBtn">الكاشير</button>
+            <button type="button" class="cashier-btn" id="cashierBtn">الكاشير</button>
         </div>
 
         <div class="input-row">
