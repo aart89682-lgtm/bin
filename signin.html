@@ -195,11 +195,11 @@
             <div class="r-icon"><i class="fa-solid fa-diagram-project"></i></div>
             <span class="r-label">وكيل</span>
         </div>
-        <div class="role" data-role="merchant" onclick="pickRole(this)">
+        <div class="role active" data-role="merchant" onclick="pickRole(this)">
             <div class="r-icon"><i class="fa-solid fa-id-card-clip"></i></div>
             <span class="r-label">تاجر</span>
         </div>
-        <div class="role active" data-role="customer" onclick="pickRole(this)">
+        <div class="role" data-role="customer" onclick="pickRole(this)">
             <div class="r-icon"><i class="fa-regular fa-user"></i></div>
             <span class="r-label">عميل</span>
         </div>
@@ -208,7 +208,7 @@
     <!-- Form -->
     <form id="loginForm" class="form-area" onsubmit="return false;">
         <div class="input-row">
-            <button type="button" class="cashier-btn" id="cashierBtn">الكاشير</button>
+            <button type="button" class="cashier-btn show" id="cashierBtn">الكاشير</button>
             <div class="field">
                 <i class="fa-solid fa-mobile-screen-button f-icon"></i>
                 <input type="tel" id="phone" placeholder="رقم الجوال" autocomplete="tel" required>
