@@ -144,24 +144,17 @@ function toggleAnswer(element) {
 
 
 
-document.getElementById('languageSwitcher').addEventListener('change', function () {
-    const lang = this.value;
-
-    fetch("{{ route('switch.lang') }}", {
-        method: "POST",
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ lang: lang })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            }
-        });
-});
+var langSwitcher = document.getElementById('languageSwitcher');
+if (langSwitcher) {
+    langSwitcher.addEventListener('change', function () {
+        var lang = this.value;
+        if (lang === 'en') {
+            window.location.href = 'lang/en';
+        } else {
+            window.location.href = '/';
+        }
+    });
+}
 
 
 
