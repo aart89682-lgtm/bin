@@ -192,15 +192,37 @@
     <!-- Role tabs -->
     <div class="roles">
         <div class="role" data-role="agent" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-solid fa-share-nodes"></i></div>
+            <div class="r-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" opacity=".55">
+                    <circle cx="12" cy="5.5" r="2.8"/>
+                    <circle cx="5.5" cy="17" r="2.3"/>
+                    <circle cx="18.5" cy="17" r="2.3"/>
+                    <rect x="11.2" y="8" width="1.6" height="7" rx=".8"/>
+                    <rect x="5.5" y="10" width="7" height="1.6" rx=".8" transform="rotate(-55 9 10.8)"/>
+                    <rect x="11.5" y="10" width="7" height="1.6" rx=".8" transform="rotate(55 15 10.8)"/>
+                </svg>
+            </div>
             <span class="r-label">وكيل</span>
         </div>
         <div class="role active" data-role="merchant" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+            <div class="r-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="6" y="2.5" width="13" height="16" rx="2.5" transform="rotate(6 12.5 10.5)"/>
+                    <rect x="4" y="5" width="13" height="16" rx="2.5" fill="white" stroke="currentColor"/>
+                    <line x1="7" y1="10" x2="12" y2="10"/>
+                    <line x1="7" y1="13" x2="14" y2="13"/>
+                    <line x1="7" y1="16" x2="11" y2="16"/>
+                </svg>
+            </div>
             <span class="r-label">تاجر</span>
         </div>
         <div class="role" data-role="customer" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-regular fa-user"></i></div>
+            <div class="r-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="7.5" r="4"/>
+                    <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8H4z"/>
+                </svg>
+            </div>
             <span class="r-label">عميل</span>
         </div>
     </div>
