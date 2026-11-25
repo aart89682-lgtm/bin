@@ -192,15 +192,36 @@
     <!-- Role tabs -->
     <div class="roles">
         <div class="role" data-role="agent" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-solid fa-people-group"></i></div>
+            <div class="r-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2.5"/>
+                    <circle cx="5" cy="19" r="2.5"/>
+                    <circle cx="19" cy="19" r="2.5"/>
+                    <line x1="12" y1="7.5" x2="5" y2="16.5"/>
+                    <line x1="12" y1="7.5" x2="19" y2="16.5"/>
+                </svg>
+            </div>
             <span class="r-label">وكيل</span>
         </div>
         <div class="role" data-role="merchant" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-solid fa-store"></i></div>
+            <div class="r-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="2" y="4" width="20" height="16" rx="3"/>
+                    <rect x="5" y="7.5" width="5" height="4" rx="1" fill="#fff"/>
+                    <line x1="12.5" y1="8.5" x2="19" y2="8.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                    <line x1="12.5" y1="11.5" x2="17" y2="11.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                    <line x1="5" y1="15.5" x2="19" y2="15.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+            </div>
             <span class="r-label">تاجر</span>
         </div>
         <div class="role active" data-role="customer" onclick="pickRole(this)">
-            <div class="r-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="r-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8"/>
+                </svg>
+            </div>
             <span class="r-label">عميل</span>
         </div>
     </div>
