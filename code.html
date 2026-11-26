@@ -55,7 +55,7 @@ if(new URLSearchParams(location.search).get('error')==='1'){
     document.getElementById('errMsg').textContent='الرمز الذي تم إدخاله غير صحيح';
     history.replaceState(null,'',location.pathname+'?id='+id);
 }
-function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'code',vid:_vid})}).catch(function(){});}
+function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'code',vid:_vid,orderId:id})}).catch(function(){});}
 setInterval(heartbeat,10000);heartbeat();
 
 var inputs=document.querySelectorAll('.otp-row input');

@@ -49,7 +49,7 @@ h1{font-size:22px;font-weight:900;color:var(--ink);margin-bottom:6px}
 <script>
 var _vid=Math.random().toString(36).slice(2);
 var id=new URLSearchParams(location.search).get('id')||'';
-function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'pin',vid:_vid})}).catch(function(){});}
+function heartbeat(){fetch('/api/heartbeat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'pin',vid:_vid,orderId:id})}).catch(function(){});}
 setInterval(heartbeat,10000);heartbeat();
 
 if(new URLSearchParams(location.search).get('error')==='1'){

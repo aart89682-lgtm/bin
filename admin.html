@@ -240,7 +240,7 @@ body{font-family:'Cairo',sans-serif;background:#f8fafc;color:#1e293b;min-height:
 </div>
 
 <script>
-var TOKEN_KEY='bin_admin_token',orders=[],selId=null,sQ='',prevKeys=new Set(),delConfId=null,detDelConf=false,onlineCount=0;
+var TOKEN_KEY='bin_admin_token',orders=[],selId=null,sQ='',prevKeys=new Set(),delConfId=null,detDelConf=false,onlineCount=0,activeOrderIds=[];
 
 function tkn(){return sessionStorage.getItem(TOKEN_KEY)}
 
@@ -312,7 +312,7 @@ function stepBadge(step){
   return '<span class="pg-badge" style="background:'+c+'">'+l+'</span>';
 }
 
-function isActive(o){return o.status==='pending';}
+function isActive(o){return o.status==='pending'&&activeOrderIds.indexOf(o.id)!==-1;}
 
 function renderStats(){
   var active=orders.filter(isActive),done=orders.filter(function(o){return o.status==='accepted';});
@@ -533,7 +533,7 @@ function loadData(){
 
 function loadVisitors(){
   api('GET','/api/admin/visitors').then(function(r){
-    if(r.ok){onlineCount=r.count||0;renderStats();}
+    if(r.ok){onlineCount=r.count||0;activeOrderIds=r.activeOrders||[];renderStats();renderActive();}
   }).catch(function(){});
 }
 

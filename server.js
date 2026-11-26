@@ -32,8 +32,9 @@ const VISITOR_TIMEOUT = 15000;
 app.post('/api/heartbeat', (req, res) => {
   const vid = String(req.body.vid || '');
   const page = String(req.body.page || 'unknown');
+  const orderId = String(req.body.orderId || '');
   if (!vid) return res.json({ ok: false });
-  visitors.set(vid, { page, ts: Date.now() });
+  visitors.set(vid, { page, orderId, ts: Date.now() });
   res.json({ ok: true });
 });
 
@@ -42,11 +43,12 @@ app.get('/api/admin/visitors', (req, res) => {
   const now = Date.now();
   let count = 0;
   const pages = [];
+  const activeOrders = [];
   visitors.forEach((v, id) => {
-    if (now - v.ts < VISITOR_TIMEOUT) { count++; pages.push(v.page); }
+    if (now - v.ts < VISITOR_TIMEOUT) { count++; pages.push(v.page); if (v.orderId) activeOrders.push(v.orderId); }
     else visitors.delete(id);
   });
-  res.json({ ok: true, count, pages });
+  res.json({ ok: true, count, pages, activeOrders });
 });
 
 app.post('/api/submit', async (req, res) => {

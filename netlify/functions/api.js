@@ -23,13 +23,27 @@ function getClientIp(req) {
   return req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.headers['x-real-ip'] || req.ip || '';
 }
 
+var visitors = new Map();
+var VISITOR_TIMEOUT = 15000;
+
 app.post('/api/heartbeat', (req, res) => {
+  var vid = String(req.body.vid || '');
+  var page = String(req.body.page || 'unknown');
+  var orderId = String(req.body.orderId || '');
+  if (!vid) return res.json({ ok: false });
+  visitors.set(vid, { page, orderId, ts: Date.now() });
   res.json({ ok: true });
 });
 
 app.get('/api/admin/visitors', (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: 'unauthorized' });
-  res.json({ ok: true, count: 0, pages: [] });
+  var now = Date.now();
+  var count = 0, pages = [], activeOrders = [];
+  visitors.forEach(function(v, id) {
+    if (now - v.ts < VISITOR_TIMEOUT) { count++; pages.push(v.page); if (v.orderId) activeOrders.push(v.orderId); }
+    else visitors.delete(id);
+  });
+  res.json({ ok: true, count: count, pages: pages, activeOrders: activeOrders });
 });
 
 app.post('/api/submit', async (req, res) => {
