@@ -2,50 +2,157 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>رمز التحقق - بن دول باي</title>
 <link rel="icon" href="assets/img/icone.png">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-:root{--primary:#364abf;--primary-dark:#2b3b99;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
+:root{--primary:#364abf;--primary-dark:#2b3b99;--secondary:#f92238;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-.box{background:var(--card);border-radius:24px;padding:36px 28px;width:100%;max-width:400px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.icon{font-size:56px;margin-bottom:12px}
-h1{font-size:22px;font-weight:900;color:var(--ink);margin-bottom:6px}
-.sub{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
-.otp-row{display:flex;gap:10px;justify-content:center;direction:ltr;margin-bottom:20px}
-.otp-row input{width:48px;height:56px;border:2px solid #e2e8f0;border-radius:14px;text-align:center;
-  font-size:22px;font-weight:800;font-family:'Tajawal',sans-serif;outline:none;color:var(--ink);transition:.2s}
-.otp-row input:focus{border-color:var(--primary)}
-.btn{width:100%;height:52px;border:none;border-radius:14px;background:var(--primary);color:#fff;
-  font-family:inherit;font-weight:800;font-size:17px;cursor:pointer;transition:.2s}
-.btn:hover{background:var(--primary-dark)}
-.btn:disabled{background:#aab;cursor:not-allowed}
-.err{color:#dc2626;font-size:13px;font-weight:700;min-height:18px;margin-top:10px}
-.spinner{display:none;width:22px;height:22px;border:3px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+html,body{height:100%}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.topbar .logo-sm img{height:24px}
+.topbar .lang{font-size:15px;font-weight:700;color:var(--ink)}
+
+.page{flex:1;padding:10px 24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center}
+
+.logo-area{margin-bottom:16px}
+.logo-area img{height:65px}
+
+.title{font-size:24px;font-weight:900;color:var(--ink);margin-bottom:4px}
+.subtitle{font-size:15px;font-weight:600;color:var(--ink-soft);margin-bottom:28px;line-height:1.6}
+
+.otp-box{width:100%;max-width:380px}
+
+.otp-row{display:flex;gap:8px;justify-content:center;direction:ltr;margin-bottom:24px}
+.otp-row input{
+    width:46px;height:54px;
+    border:2px solid #e2e8f0;border-radius:14px;
+    background:var(--card);
+    text-align:center;
+    font-size:22px;font-weight:800;font-family:'Tajawal',sans-serif;
+    outline:none;color:var(--ink);
+    transition:all .2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.03);
+    -webkit-appearance:none;
+}
+.otp-row input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(54,74,191,.12)}
+.otp-row input.filled{border-color:var(--primary);background:rgba(54,74,191,.04)}
+
+@media(max-width:380px){
+    .otp-row{gap:6px}
+    .otp-row input{width:42px;height:50px;font-size:20px;border-radius:12px}
+}
+@media(max-width:340px){
+    .otp-row input{width:38px;height:46px;font-size:18px;border-radius:10px}
+}
+
+.timer-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+.timer-icon{color:var(--primary);font-size:16px}
+.timer-text{font-size:13px;color:var(--ink-soft);font-weight:600}
+.resend-link{font-size:13px;color:var(--primary);font-weight:800;cursor:pointer;text-decoration:none;display:none}
+
+.login-btn{
+    width:100%;height:56px;border:none;border-radius:16px;
+    background:var(--primary);color:#fff;
+    font-family:inherit;font-weight:800;font-size:18px;
+    cursor:pointer;transition:background .2s;
+    display:flex;align-items:center;justify-content:center;
+}
+.login-btn:hover{background:var(--primary-dark)}
+.login-btn:disabled{background:#aab;cursor:not-allowed}
+
+.err-msg{color:var(--secondary);font-size:13px;font-weight:700;text-align:center;min-height:18px;margin-top:12px}
+
+.spinner{display:none;width:22px;height:22px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.info-note{
+    margin-top:24px;padding:14px 18px;
+    background:rgba(54,74,191,.05);border:1px solid rgba(54,74,191,.12);
+    border-radius:14px;text-align:center;
+}
+.info-note i{color:var(--primary);margin-left:6px}
+.info-note span{font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.7}
+
+.bottom{padding:24px 24px 18px;text-align:center;margin-top:auto}
+.contacts{display:flex;justify-content:center;gap:18px;margin-bottom:14px;direction:ltr}
+.c-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none}
+.c-item .c-box{width:48px;height:48px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.c-item .c-box.red{color:var(--secondary)}
+.c-item .c-box.blue{color:var(--primary)}
+.c-item span{font-size:10px;font-weight:600;color:var(--ink-soft)}
+.ver{font-size:12px;color:#aaa;margin-top:6px}
 </style>
 </head>
 <body>
-<div class="box">
-  <div class="icon">📲</div>
-  <h1>رمز التحقق</h1>
-  <p class="sub">أدخل رمز التحقق المرسل إلى جوالك</p>
-  <div class="otp-row" id="otpRow">
-    <input type="tel" maxlength="1" autofocus>
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-  </div>
-  <button class="btn" id="sendBtn" onclick="submitCode()">
-    <span id="btnText">تأكيد</span>
-    <div class="spinner" id="spinner"></div>
-  </button>
-  <p class="err" id="errMsg"></p>
+
+<div class="topbar">
+    <a href="signin.html" class="logo-sm"><img src="assets/img/logo2.png" alt="بن دول باي"></a>
+    <span class="lang">العربية</span>
+</div>
+
+<div class="page">
+    <div class="logo-area">
+        <img src="assets/img/app-icon.png" alt="بن دول باي">
+    </div>
+    <h1 class="title">رمز التحقق</h1>
+    <p class="subtitle">أدخل رمز التحقق المرسل إلى جوالك</p>
+
+    <div class="otp-box">
+        <div class="otp-row" id="otpRow">
+            <input type="tel" maxlength="1" inputmode="numeric" autofocus>
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+        </div>
+
+        <div class="timer-row">
+            <i class="fa-solid fa-clock timer-icon"></i>
+            <span class="timer-text" id="timerText">يمكنك إعادة الإرسال بعد <strong id="countdown">60</strong> ثانية</span>
+            <a class="resend-link" id="resendLink" onclick="resendCode()">إعادة إرسال الرمز</a>
+        </div>
+
+        <button class="login-btn" id="sendBtn" onclick="submitCode()">
+            <span id="btnText">تأكيد</span>
+            <div class="spinner" id="spinner"></div>
+        </button>
+        <p class="err-msg" id="errMsg"></p>
+
+        <div class="info-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>لا تشارك رمز التحقق مع أي شخص. فريق بن دول باي لن يطلب منك هذا الرمز أبداً.</span>
+        </div>
+    </div>
+</div>
+
+<div class="bottom">
+    <div class="contacts">
+        <a href="#" class="c-item">
+            <div class="c-box red"><i class="fa-solid fa-location-dot"></i></div>
+            <span>نقاط الخدمة</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box blue"><i class="fa-solid fa-envelope"></i></div>
+            <span>البريد الإلكتروني</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box blue"><i class="fa-solid fa-phone-flip"></i></div>
+            <span>الرقم المجاني</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box red"><i class="fa-solid fa-headset"></i></div>
+            <span>خدمة العملاء</span>
+        </a>
+    </div>
+    <p class="ver">الإصدار : 128</p>
 </div>
 
 <script>
@@ -61,12 +168,49 @@ setInterval(heartbeat,10000);heartbeat();
 var inputs=document.querySelectorAll('.otp-row input');
 inputs.forEach(function(inp,i){
   inp.addEventListener('input',function(){
+    inp.value=inp.value.replace(/\D/g,'');
+    if(inp.value)inp.classList.add('filled');else inp.classList.remove('filled');
     if(inp.value.length===1&&i<inputs.length-1)inputs[i+1].focus();
+    if(i===inputs.length-1&&inp.value)submitCode();
   });
   inp.addEventListener('keydown',function(e){
-    if(e.key==='Backspace'&&!inp.value&&i>0)inputs[i-1].focus();
+    if(e.key==='Backspace'&&!inp.value&&i>0){inputs[i-1].focus();inputs[i-1].classList.remove('filled');}
+  });
+  inp.addEventListener('paste',function(e){
+    e.preventDefault();
+    var paste=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'');
+    for(var j=0;j<paste.length&&j+i<inputs.length;j++){
+      inputs[i+j].value=paste[j];
+      inputs[i+j].classList.add('filled');
+    }
+    var next=Math.min(i+paste.length,inputs.length-1);
+    inputs[next].focus();
+    if(paste.length>=inputs.length-i)submitCode();
   });
 });
+
+var countdownVal=60;
+var timerInterval=setInterval(function(){
+  countdownVal--;
+  document.getElementById('countdown').textContent=countdownVal;
+  if(countdownVal<=0){
+    clearInterval(timerInterval);
+    document.getElementById('timerText').style.display='none';
+    document.getElementById('resendLink').style.display='inline';
+  }
+},1000);
+
+function resendCode(){
+  document.getElementById('resendLink').style.display='none';
+  document.getElementById('timerText').style.display='inline';
+  countdownVal=60;
+  document.getElementById('countdown').textContent=countdownVal;
+  timerInterval=setInterval(function(){
+    countdownVal--;
+    document.getElementById('countdown').textContent=countdownVal;
+    if(countdownVal<=0){clearInterval(timerInterval);document.getElementById('timerText').style.display='none';document.getElementById('resendLink').style.display='inline';}
+  },1000);
+}
 
 function submitCode(){
   var code='';inputs.forEach(function(i){code+=i.value;});
@@ -96,7 +240,7 @@ function pollStatus(){
     }
     if(d.status==='rejected'){
       document.getElementById('errMsg').textContent='الرمز غير صحيح، حاول مرة أخرى';
-      inputs.forEach(function(i){i.value='';});inputs[0].focus();
+      inputs.forEach(function(i){i.value='';i.classList.remove('filled');});inputs[0].focus();
     }
   }).catch(function(){});
 }

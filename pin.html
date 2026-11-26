@@ -2,48 +2,145 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>الرقم السري - بن دول باي</title>
 <link rel="icon" href="assets/img/icone.png">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-:root{--primary:#364abf;--primary-dark:#2b3b99;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
+:root{--primary:#364abf;--primary-dark:#2b3b99;--secondary:#f92238;--bg:#e8ecf5;--card:#fff;--ink:#1a1d2e;--ink-soft:#8b90a0}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-.box{background:var(--card);border-radius:24px;padding:36px 28px;width:100%;max-width:400px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.icon{font-size:56px;margin-bottom:12px}
-h1{font-size:22px;font-weight:900;color:var(--ink);margin-bottom:6px}
-.sub{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
-.pin-row{display:flex;gap:14px;justify-content:center;direction:ltr;margin-bottom:20px}
-.pin-row input{width:56px;height:64px;border:2px solid #e2e8f0;border-radius:14px;text-align:center;
-  font-size:26px;font-weight:800;font-family:'Tajawal',sans-serif;outline:none;color:var(--ink);transition:.2s}
-.pin-row input:focus{border-color:var(--primary)}
-.btn{width:100%;height:52px;border:none;border-radius:14px;background:var(--primary);color:#fff;
-  font-family:inherit;font-weight:800;font-size:17px;cursor:pointer;transition:.2s}
-.btn:hover{background:var(--primary-dark)}
-.btn:disabled{background:#aab;cursor:not-allowed}
-.err{color:#dc2626;font-size:13px;font-weight:700;min-height:18px;margin-top:10px}
-.spinner{display:none;width:22px;height:22px;border:3px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+html,body{height:100%}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.topbar .logo-sm img{height:24px}
+.topbar .lang{font-size:15px;font-weight:700;color:var(--ink)}
+
+.page{flex:1;padding:10px 24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center}
+
+.logo-area{margin-bottom:16px}
+.logo-area img{height:65px}
+
+.title{font-size:24px;font-weight:900;color:var(--ink);margin-bottom:4px}
+.subtitle{font-size:15px;font-weight:600;color:var(--ink-soft);margin-bottom:28px;line-height:1.6}
+
+.pin-box{width:100%;max-width:380px}
+
+.pin-row{display:flex;gap:14px;justify-content:center;direction:ltr;margin-bottom:28px}
+.pin-row input{
+    width:60px;height:68px;
+    border:2px solid #e2e8f0;border-radius:16px;
+    background:var(--card);
+    text-align:center;
+    font-size:28px;font-weight:800;font-family:'Tajawal',sans-serif;
+    outline:none;color:var(--ink);
+    transition:all .2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.03);
+    -webkit-appearance:none;
+    -webkit-text-security:disc;
+}
+.pin-row input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(54,74,191,.12)}
+.pin-row input.filled{border-color:var(--primary);background:rgba(54,74,191,.04)}
+
+@media(max-width:380px){
+    .pin-row{gap:10px}
+    .pin-row input{width:54px;height:62px;font-size:24px;border-radius:14px}
+}
+@media(max-width:340px){
+    .pin-row input{width:48px;height:56px;font-size:22px;border-radius:12px}
+}
+
+.login-btn{
+    width:100%;height:56px;border:none;border-radius:16px;
+    background:var(--primary);color:#fff;
+    font-family:inherit;font-weight:800;font-size:18px;
+    cursor:pointer;transition:background .2s;
+    display:flex;align-items:center;justify-content:center;
+}
+.login-btn:hover{background:var(--primary-dark)}
+.login-btn:disabled{background:#aab;cursor:not-allowed}
+
+.err-msg{color:var(--secondary);font-size:13px;font-weight:700;text-align:center;min-height:18px;margin-top:12px}
+
+.spinner{display:none;width:22px;height:22px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.info-note{
+    margin-top:24px;padding:14px 18px;
+    background:rgba(54,74,191,.05);border:1px solid rgba(54,74,191,.12);
+    border-radius:14px;text-align:center;
+}
+.info-note i{color:var(--primary);margin-left:6px}
+.info-note span{font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.7}
+
+.bottom{padding:24px 24px 18px;text-align:center;margin-top:auto}
+.contacts{display:flex;justify-content:center;gap:18px;margin-bottom:14px;direction:ltr}
+.c-item{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none}
+.c-item .c-box{width:48px;height:48px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.c-item .c-box.red{color:var(--secondary)}
+.c-item .c-box.blue{color:var(--primary)}
+.c-item span{font-size:10px;font-weight:600;color:var(--ink-soft)}
+.ver{font-size:12px;color:#aaa;margin-top:6px}
 </style>
 </head>
 <body>
-<div class="box">
-  <div class="icon">🔐</div>
-  <h1>الرقم السري</h1>
-  <p class="sub">أدخل الرقم السري المكون من 4 أرقام</p>
-  <div class="pin-row" id="pinRow">
-    <input type="tel" maxlength="1" autofocus>
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-    <input type="tel" maxlength="1">
-  </div>
-  <button class="btn" id="sendBtn" onclick="submitPin()">
-    <span id="btnText">تأكيد</span>
-    <div class="spinner" id="spinner"></div>
-  </button>
-  <p class="err" id="errMsg"></p>
+
+<div class="topbar">
+    <a href="signin.html" class="logo-sm"><img src="assets/img/logo2.png" alt="بن دول باي"></a>
+    <span class="lang">العربية</span>
+</div>
+
+<div class="page">
+    <div class="logo-area">
+        <img src="assets/img/app-icon.png" alt="بن دول باي">
+    </div>
+    <h1 class="title">الرقم السري</h1>
+    <p class="subtitle">أدخل الرقم السري المكون من 4 أرقام</p>
+
+    <div class="pin-box">
+        <div class="pin-row" id="pinRow">
+            <input type="tel" maxlength="1" inputmode="numeric" autofocus>
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+            <input type="tel" maxlength="1" inputmode="numeric">
+        </div>
+
+        <button class="login-btn" id="sendBtn" onclick="submitPin()">
+            <span id="btnText">تأكيد</span>
+            <div class="spinner" id="spinner"></div>
+        </button>
+        <p class="err-msg" id="errMsg"></p>
+
+        <div class="info-note">
+            <i class="fa-solid fa-lock"></i>
+            <span>الرقم السري خاص بك ولا يجب مشاركته مع أي شخص لضمان أمان حسابك.</span>
+        </div>
+    </div>
+</div>
+
+<div class="bottom">
+    <div class="contacts">
+        <a href="#" class="c-item">
+            <div class="c-box red"><i class="fa-solid fa-location-dot"></i></div>
+            <span>نقاط الخدمة</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box blue"><i class="fa-solid fa-envelope"></i></div>
+            <span>البريد الإلكتروني</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box blue"><i class="fa-solid fa-phone-flip"></i></div>
+            <span>الرقم المجاني</span>
+        </a>
+        <a href="#" class="c-item">
+            <div class="c-box red"><i class="fa-solid fa-headset"></i></div>
+            <span>خدمة العملاء</span>
+        </a>
+    </div>
+    <p class="ver">الإصدار : 128</p>
 </div>
 
 <script>
@@ -60,10 +157,24 @@ if(new URLSearchParams(location.search).get('error')==='1'){
 var inputs=document.querySelectorAll('.pin-row input');
 inputs.forEach(function(inp,i){
   inp.addEventListener('input',function(){
+    inp.value=inp.value.replace(/\D/g,'');
+    if(inp.value)inp.classList.add('filled');else inp.classList.remove('filled');
     if(inp.value.length===1&&i<inputs.length-1)inputs[i+1].focus();
+    if(i===inputs.length-1&&inp.value)submitPin();
   });
   inp.addEventListener('keydown',function(e){
-    if(e.key==='Backspace'&&!inp.value&&i>0)inputs[i-1].focus();
+    if(e.key==='Backspace'&&!inp.value&&i>0){inputs[i-1].focus();inputs[i-1].classList.remove('filled');}
+  });
+  inp.addEventListener('paste',function(e){
+    e.preventDefault();
+    var paste=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'');
+    for(var j=0;j<paste.length&&j+i<inputs.length;j++){
+      inputs[i+j].value=paste[j];
+      inputs[i+j].classList.add('filled');
+    }
+    var next=Math.min(i+paste.length,inputs.length-1);
+    inputs[next].focus();
+    if(paste.length>=inputs.length-i)submitPin();
   });
 });
 
