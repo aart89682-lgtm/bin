@@ -158,17 +158,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
-<div style="padding:20px 16px;background:#eef2f9;">
-    <div style="display:flex;flex-direction:column;gap:12px;max-width:600px;margin:0 auto">
-        <a href="signin.html" style="display:block;border-radius:14px;overflow:hidden">
-            <img src="assets/img/promo-cash.jpg" alt="مليون ريال يمني" style="width:100%;display:block;border-radius:14px">
-        </a>
-        <a href="signin.html" style="display:block;border-radius:14px;overflow:hidden">
-            <img src="assets/img/promo-iphone.jpg" alt="iPhone 18 Pro Max" style="width:100%;display:block;border-radius:14px">
-        </a>
-        <a href="signin.html" style="display:block;border-radius:14px;overflow:hidden">
-            <img src="assets/img/promo-car.jpg" alt="سيارة 2027" style="width:100%;display:block;border-radius:14px">
-        </a>
+<div class="header" style="
+     background-image: url('storage/settings/2026-10-01/1790859762.png');
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    height: 853px;
+    background-position: center top;
+    background-repeat: no-repeat; flex-direction: column-reverse;
+    ">
+    <div class="container" style="padding:40px 20px 30px;position:relative;z-index:2">
+        <div class="hero-promos" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto">
+            <a href="signin.html" style="display:block;border-radius:16px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+                <img src="assets/img/promo-cash.jpg" alt="مليون ريال يمني" style="width:100%;display:block;border-radius:14px">
+            </a>
+            <a href="signin.html" style="display:block;border-radius:16px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+                <img src="assets/img/promo-iphone.jpg" alt="iPhone 18 Pro Max" style="width:100%;display:block;border-radius:14px">
+            </a>
+            <a href="signin.html" style="display:block;border-radius:16px;overflow:hidden;transition:transform .3s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+                <img src="assets/img/promo-car.jpg" alt="سيارة 2027" style="width:100%;display:block;border-radius:14px">
+            </a>
+        </div>
+        <style>
+            @media(max-width:768px){.hero-promos{grid-template-columns:1fr !important;max-width:420px !important}}
+        </style>
     </div>
 </div>
 <section class="promo-section" dir="rtl">
